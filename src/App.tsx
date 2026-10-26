@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-  return <>Robo Travellers</>;
+  return <main className="text-center">Robo Travellers</main>;
 }
 
 export default App;
