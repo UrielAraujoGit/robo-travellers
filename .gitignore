@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Single files
+data/raw_data.json
+sql/exoplanets-data.sql

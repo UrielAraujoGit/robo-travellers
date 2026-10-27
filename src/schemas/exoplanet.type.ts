@@ -34,8 +34,11 @@ export type Flag = 0 | 1;
  * -  0 → regular measured value.
  * -  1 → upper limit (the true value is ≤ the reported one).
  * - -1 → lower limit (the true value is ≥ the reported one).
+ *
+ * The archive does not enforce these values: at least one row holds another
+ * number (`pl_denslim` = 9 for TOI-431 d), so any number must be accepted.
  */
-export type LimitFlag = -1 | 0 | 1;
+export type LimitFlag = -1 | 0 | 1 | (number & {});
 
 /** Short codes for the discovery method (`disc_method`). */
 export type DiscoveryMethodCode =
@@ -1088,8 +1091,9 @@ export interface PSCompParsRow {
   /**
    * pl_tsm formatted for display together with its uncertainties.
    * May contain HTML (`<div>`, `<span>`) and entities such as `&plusmn;` or `&gt;`.
+   * Note: like `pl_esmstr`, the API may return this one as a number.
    */
-  pl_tsmstr: string | null;
+  pl_tsmstr: number | string | null;
   /** ID of the solution (row in the `ps` table) that pl_tsm was taken from. `null` if it is a calculated value. */
   pl_tsm_solnid: string | null;
   /**
@@ -1108,7 +1112,7 @@ export interface PSCompParsRow {
   /**
    * pl_esm formatted for display together with its uncertainties.
    * May contain HTML (`<div>`, `<span>`) and entities such as `&plusmn;` or `&gt;`.
-   * Note: unlike the other `*str` fields, the API may return this one as a number.
+   * Note: unlike most `*str` fields (but like `pl_tsmstr`), the API may return this one as a number.
    */
   pl_esmstr: number | string | null;
   /** ID of the solution (row in the `ps` table) that pl_esm was taken from. `null` if it is a calculated value. */
