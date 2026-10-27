@@ -28,4 +28,5 @@ dist-ssr
 
 # Single files
 data/raw_data.json
+data/exoplanets.csv
 sql/exoplanets-data.sql
