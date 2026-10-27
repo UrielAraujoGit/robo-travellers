@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# .env files
+*.env
+
 # Single files
 data/raw_data.json
 sql/exoplanets-data.sql

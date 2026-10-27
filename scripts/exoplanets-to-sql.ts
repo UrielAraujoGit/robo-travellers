@@ -1,5 +1,5 @@
 import { writeFile } from "node:fs/promises";
-import type { PSCompParsRow } from "../src/schemas/exoplanet.type.ts";
+import type { ExoplanetType } from "../src/schemas/exoplanet.type.ts";
 
 /** Rows per INSERT statement, so a full archive dump doesn't become one giant statement. */
 const BATCH_SIZE = 500;
@@ -7,10 +7,10 @@ const BATCH_SIZE = 500;
 /** Column names come from the data, so only plain snake_case identifiers are allowed into the SQL. */
 const IDENTIFIER = /^[a-z_][a-z0-9_]*$/;
 
-type Column = keyof PSCompParsRow;
+type Column = keyof ExoplanetType;
 
 /** `undefined` is accepted because a row may lack a key that other rows have. */
-function toSqlLiteral(value: PSCompParsRow[Column] | undefined): string {
+function toSqlLiteral(value: ExoplanetType[Column] | undefined): string {
   if (value === null || value === undefined) return "NULL";
   if (typeof value === "number") return Number.isFinite(value) ? String(value) : "NULL";
   return `'${value.replaceAll("'", "''")}'`;
@@ -21,7 +21,7 @@ function toSqlLiteral(value: PSCompParsRow[Column] | undefined): string {
  * (see sql/exoplanets.sql). Rows whose `pl_name` already exists are updated, so
  * the script can be re-run with a fresher archive dump.
  */
-export function exoplanetsToSql(rows: PSCompParsRow[]): string {
+export function exoplanetsToSql(rows: ExoplanetType[]): string {
   if (rows.length === 0) return "-- No exoplanets to insert.\n";
 
   // Union of keys across all rows; a row missing a key gets NULL for it.
@@ -52,6 +52,6 @@ export function exoplanetsToSql(rows: PSCompParsRow[]): string {
 }
 
 /** Writes the upsert script for `rows` to `filePath`. */
-export async function writeExoplanetsSqlFile(rows: PSCompParsRow[], filePath: string): Promise<void> {
+export async function writeExoplanetsSqlFile(rows: ExoplanetType[], filePath: string): Promise<void> {
   await writeFile(filePath, exoplanetsToSql(rows), "utf-8");
 }

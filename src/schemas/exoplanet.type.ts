@@ -42,8 +42,17 @@ export type LimitFlag = -1 | 0 | 1 | (number & {});
 
 /** Short codes for the discovery method (`disc_method`). */
 export type DiscoveryMethodCode =
-  | "ast" | "dkin" | "etv" | "ima" | "micro" | "obm"
-  | "ptv" | "pul" | "rv" | "tran" | "ttv"
+  | "ast"
+  | "dkin"
+  | "etv"
+  | "ima"
+  | "micro"
+  | "obm"
+  | "ptv"
+  | "pul"
+  | "rv"
+  | "tran"
+  | "ttv"
   | (string & {});
 
 /** Full name of the discovery method (`discoverymethod`). */
@@ -65,14 +74,17 @@ export type DiscoveryMethod =
 export type DiscoveryLocale = "Ground" | "Space" | "Multiple" | (string & {});
 
 /** Which kind of mass was used as the "best mass" (`pl_bmassprov`). */
-export type BestMassProvenance = "Mass" | "Msini" | "Msin(i)/sin(i)" | (string & {});
+export type BestMassProvenance =
+  | "Mass"
+  | "Msini"
+  | "Msin(i)/sin(i)"
+  | (string & {});
 
 /** Ratio used to express stellar metallicity (`st_metratio`). */
 export type MetallicityRatio = "[Fe/H]" | "[M/H]" | "[m/H]" | (string & {});
 
 /** A row of the `pscomppars` table: all the data for one confirmed exoplanet. */
-export interface PSCompParsRow {
-
+export interface ExoplanetType {
   // ──────────────────────────────────────────────────────────────────────
   // Identifiers and names
   // ──────────────────────────────────────────────────────────────────────
@@ -1994,6 +2006,3 @@ export interface PSCompParsRow {
    */
   sy_kepmag_reflink: string | null;
 }
-
-/** Full endpoint response: an array with one row per planet. */
-export type PSCompParsResponse = PSCompParsRow[];
