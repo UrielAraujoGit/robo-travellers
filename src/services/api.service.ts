@@ -1,5 +1,5 @@
 import { type ExoplanetType } from "../schemas/exoplanet.type";
-import { supabase } from "./db-connection.service";
+import { supabase } from "../../scripts/db-connection";
 
 export const apiGetAllExoplanets = async () => {
   const { data, error } = await supabase
