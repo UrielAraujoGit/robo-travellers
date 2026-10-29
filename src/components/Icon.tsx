@@ -1,5 +1,23 @@
 const paths = {
   arrow: <path d="M5 12h14M14 7l5 5-5 5" />,
+  search: (
+    <>
+      <circle cx="11" cy="11" r="6" />
+      <path d="m16 16 4 4" />
+    </>
+  ),
+  thermo: (
+    <>
+      <path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0Z" />
+      <path d="M12 11v6" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 8v4l3 2" />
+    </>
+  ),
   planet: (
     <>
       <circle cx="12" cy="12" r="6" />

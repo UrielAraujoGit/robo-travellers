@@ -2,33 +2,35 @@ import { Link } from "react-router";
 import { Icon } from "../components/Icon";
 import { Page } from "../components/Page";
 import { PlanetArt } from "../components/PlanetArt";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { ExoplanetType } from "../schemas/exoplanet.type";
 import { apiGetRandomExoplanets } from "../services/api.service";
 import { PlanetPlaceholder } from "../components/PlanetPlaceholder";
 
 export function Home() {
   const [exoplanet, setExoplanet] = useState<ExoplanetType | null>(null);
+  // Only the latest request may set the planet. In DEV, StrictMode runs this
+  // effect twice: the first response is ignored, so the planet doesn't swap.
+  const latestRequest = useRef(0);
 
   useEffect(() => {
-    getRandomExoplanets();
-  }, []);
+    const request = ++latestRequest.current;
 
-  const getRandomExoplanets = async () => {
-    try {
-      const results = await apiGetRandomExoplanets(1);
-      if (results == null) {
-        throw new Error("random exoplanets list is null");
+    const getRandomExoplanet = async () => {
+      try {
+        const results = await apiGetRandomExoplanets(1);
+        const result = results?.[0];
+        if (!result) throw new Error("random exoplanet is null");
+        if (request === latestRequest.current) setExoplanet(result);
+      } catch (error) {
+        if (request === latestRequest.current) {
+          console.error("error getting random exoplanet", error);
+        }
       }
-      const result = results[0] ?? null;
-      if (!result) {
-        throw new Error("random exoplanet is null");
-      }
-      setExoplanet(result);
-    } catch (e) {
-      console.error("error getting random exoplanets");
-    }
-  };
+    };
+
+    getRandomExoplanet();
+  }, []);
 
   return (
     <Page>

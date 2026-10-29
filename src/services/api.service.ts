@@ -17,3 +17,19 @@ export const apiGetRandomExoplanets = async (limit = 10) => {
   console.log("apiGetRandomExoplanets, limit" + limit, data, error);
   return data as ExoplanetType[] | null;
 };
+
+/** Characters with a meaning in PostgREST filters; stripped from user search text. */
+const FILTER_SYNTAX = /[,()*%\\:]/g;
+
+/** Exoplanets whose name or host star contains `query` (case-insensitive). */
+export const apiSearchExoplanets = async (query: string, limit = 24) => {
+  const term = query.replace(FILTER_SYNTAX, " ").trim();
+  const { data, error } = await supabase
+    .from("exoplanets")
+    .select("*")
+    .or(`pl_name.ilike.%${term}%,hostname.ilike.%${term}%`)
+    .order("pl_name")
+    .limit(limit);
+  console.log("apiSearchExoplanets, query " + term, data, error);
+  return data as ExoplanetType[] | null;
+};
