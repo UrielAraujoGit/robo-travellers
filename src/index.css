@@ -1,1 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap");
 @import "tailwindcss";
+
+/* Design tokens (from the "Exoplanet Robot Explorer" Figma Make file) */
+@theme {
+  --color-ink: #010107;
+  --color-panel: #060512;
+  --color-line: #211a3d;
+  --color-muted: #827b9b;
+  --color-foreground: #eeeaf8;
+  --color-accent: #6978d9;
+  --color-accent-purple: #8746c4;
+
+  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+
+  /* The design is laid out for phones first, then ≥601px and ≥901px */
+  --breakpoint-tablet: 601px;
+  --breakpoint-desktop: 901px;
+}
+
+@layer base {
+  body {
+    @apply bg-ink text-foreground;
+  }
+}
+
+/* Deep-space page background with a tiled starfield on top */
+@utility space-background {
+  background:
+    radial-gradient(circle at 76% 28%, rgba(50, 40, 160, 0.07), transparent 34%),
+    radial-gradient(circle at 20% 78%, rgba(90, 30, 145, 0.045), transparent 38%),
+    linear-gradient(145deg, #000003 0%, #020108 52%, #000004 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.7;
+    background-image:
+      radial-gradient(circle at 12% 22%, #fff 0 1px, transparent 1.5px),
+      radial-gradient(circle at 82% 15%, #8494ff 0 1px, transparent 1.5px),
+      radial-gradient(circle at 68% 72%, #fff 0 1px, transparent 1.5px),
+      radial-gradient(circle at 22% 82%, #b077ff 0 1px, transparent 1.5px);
+    background-size:
+      310px 280px,
+      370px 340px,
+      440px 360px,
+      390px 420px;
+  }
+}
+
+/* Shading and diagonal cloud bands of a planet drawn with CSS */
+@utility planet-surface {
+  box-shadow:
+    inset -22px -18px 34px rgba(0, 0, 0, 0.65),
+    inset 12px 8px 100px rgba(255, 255, 255, 0.16),
+    0 0 100px rgba(116, 69, 255, 0.38);
+}

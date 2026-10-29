@@ -1,36 +1,26 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { apiGetAllExoplanets } from "./services/api.service";
-import { type ExoplanetType } from "./schemas/exoplanet.type";
+import { lazy, Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router";
+import { Home } from "./pages/Home";
+
+// Loaded on demand so the Home page doesn't pull in the Supabase client.
+const Explore = lazy(() =>
+  import("./pages/Explore").then((module) => ({ default: module.Explore })),
+);
 
 function App() {
-  const [exoplanets, setExoplanets] = useState<ExoplanetType[]>([]);
-
-  useEffect(() => {
-    getAllExoplanets();
-  }, []);
-
-  const getAllExoplanets = async () => {
-    try {
-      const result = await apiGetAllExoplanets();
-      if (result == null) {
-        throw new Error("exoplanets list is null");
-      }
-      setExoplanets(result);
-    } catch (e) {
-      console.error("error getting exoplanets list");
-    }
-  };
-
   return (
-    <main className="text-center">
-      Robo Travellers
-      <div>
-        {exoplanets.map((item) => (
-          <div key={item.pl_name}>{item.pl_name}</div>
-        ))}
-      </div>
-    </main>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="/explore"
+        element={
+          <Suspense fallback={null}>
+            <Explore />
+          </Suspense>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
