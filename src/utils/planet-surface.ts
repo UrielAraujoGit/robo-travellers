@@ -10,7 +10,7 @@ type SurfaceFields = Pick<
 const GAS_GIANT_RADIUS = 6;
 /** Above this mass [Earth masses] a planet is a gas giant. */
 const GAS_GIANT_MASS = 50;
-/** Below this radius [Earth radii] most planets are rocky (the "radius valley" is around 1.5–2). */
+/** Below this radius [Earth radii] most planets are rocky (the "radius valley" is around 1.5-2). */
 const ROCKY_RADIUS = 1.6;
 /** Largest radius [Earth radii] considered for a water world. */
 const OCEAN_MAX_RADIUS = 4;

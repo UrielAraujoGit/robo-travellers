@@ -80,17 +80,19 @@ export function Home() {
               <PlanetPlaceholder className="w-[78%] tablet:w-[82%]" />
             )}
           </div>
-          <div className="absolute right-0 bottom-[8%] hidden flex-col gap-1.25 border-l border-accent-purple pl-3.75 font-display tablet:flex">
-            <span className="text-[9px] tracking-[0.15em] text-muted">
-              MISSION 01
-            </span>
-            <strong className="text-[14px] tracking-[0.12em]">
-              {exoplanet?.pl_name ?? "-"}
-            </strong>
-            <small className="text-[9px] tracking-[0.15em] text-muted">
-              STATUS · TRANSMITTING
-            </small>
-          </div>
+          <Link to={`/exoplanet/${exoplanet?.pl_name}`}>
+            <div className="absolute right-0 bottom-[8%] hidden flex-col gap-1.25 border-l border-accent-purple pl-3.75 font-display tablet:flex">
+              <span className="text-[9px] tracking-[0.15em] text-muted">
+                MISSION 01
+              </span>
+              <strong className="text-[14px] tracking-[0.12em]">
+                {exoplanet?.pl_name ?? "-"}
+              </strong>
+              <small className="text-[9px] tracking-[0.15em] text-muted">
+                STATUS · TRANSMITTING
+              </small>
+            </div>
+          </Link>
         </div>
       </section>
     </Page>

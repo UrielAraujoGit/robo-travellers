@@ -33,3 +33,15 @@ export const apiSearchExoplanets = async (query: string, limit = 24) => {
   console.log("apiSearchExoplanets, query " + term, data, error);
   return data as ExoplanetType[] | null;
 };
+
+/** One exoplanet by its exact name; `null` when there's no planet with that name. */
+export const apiGetExoplanet = async (name: string) => {
+  const { data, error } = await supabase
+    .from("exoplanets")
+    .select("*")
+    .eq("pl_name", name)
+    .maybeSingle();
+  console.log("apiGetExoplanet, name " + name, data, error);
+  if (error) throw error;
+  return data as ExoplanetType | null;
+};

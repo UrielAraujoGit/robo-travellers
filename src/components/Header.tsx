@@ -1,4 +1,9 @@
-import { Link, NavLink, type NavLinkRenderProps } from "react-router";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  type NavLinkRenderProps,
+} from "react-router";
 import { Icon } from "./Icon";
 
 const navLinkClass = ({ isActive }: NavLinkRenderProps) =>
@@ -9,6 +14,8 @@ const navLinkClass = ({ isActive }: NavLinkRenderProps) =>
   }`;
 
 export function Header() {
+  // A planet's mission page belongs to the archive, so "Explore" stays active there
+  const inMission = useLocation().pathname.startsWith("/exoplanet/");
   return (
     // Fixed to the top of the viewport, with the same side gutters as Page;
     // content scrolls under a translucent, blurred background.
@@ -31,7 +38,12 @@ export function Header() {
           <NavLink to="/" end className={navLinkClass}>
             Home
           </NavLink>
-          <NavLink to="/explore" className={navLinkClass}>
+          <NavLink
+            to="/explore"
+            className={(props) =>
+              navLinkClass({ ...props, isActive: props.isActive || inMission })
+            }
+          >
             Explore
           </NavLink>
           <span className="hidden rounded-full border border-[#302855] px-3 py-2 font-display text-[10px] leading-[normal] font-medium tracking-[0.13em] text-accent desktop:inline">

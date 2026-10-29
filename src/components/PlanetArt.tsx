@@ -29,7 +29,7 @@ interface NoiseLayerProps {
   frequency: string;
   octaves?: number;
   seed: number;
-  /** Noise level (0–1) where the layer starts to show. */
+  /** Noise level (0-1) where the layer starts to show. */
   threshold: number;
   /** How quickly it goes from transparent to opaque above the threshold. */
   contrast: number;
@@ -152,7 +152,7 @@ interface ReliefProps {
   frequency: number;
   /** Height of the terrain: higher = harsher light and shadow. */
   height?: number;
-  /** How strongly the relief shows over the surface (0–1). */
+  /** How strongly the relief shows over the surface (0-1). */
   strength?: number;
   octaves?: number;
 }
@@ -275,7 +275,7 @@ interface MagmaVeinsProps {
   width?: number;
   /** Color of the thin, hot core. */
   coreColor?: string;
-  /** Overall brightness (0–1); finer, secondary cracks use less. */
+  /** Overall brightness (0-1); finer, secondary cracks use less. */
   intensity?: number;
 }
 
@@ -625,7 +625,7 @@ function OceanDetails({ id, seed, accentColor }: DetailsProps) {
   );
 }
 
-/** Share of gas planets with a storm (0–1). */
+/** Share of gas planets with a storm (0-1). */
 const STORM_CHANCE = 0.3;
 
 function GasDetails({ id, seed, accentColor = "#fff" }: DetailsProps) {

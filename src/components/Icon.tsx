@@ -12,6 +12,13 @@ const paths = {
       <path d="M12 11v6" />
     </>
   ),
+  distance: (
+    <>
+      <path d="M6 12h12" strokeDasharray="2 2.5" />
+      <circle cx="4" cy="12" r="2" />
+      <circle cx="20" cy="12" r="2" />
+    </>
+  ),
   clock: (
     <>
       <circle cx="12" cy="12" r="8" />

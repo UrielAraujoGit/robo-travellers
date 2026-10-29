@@ -17,6 +17,30 @@
   /* The design is laid out for phones first, then ≥601px and ≥901px */
   --breakpoint-tablet: 601px;
   --breakpoint-desktop: 901px;
+
+  /* Mission transition: the rocket bobs on its way and its flame flickers */
+  --animate-rocket-flight: rocket-flight 2.2s ease-in-out infinite alternate;
+  --animate-flame-pulse: flame-pulse 0.25s ease-in-out infinite alternate;
+
+  /* Relative to the rocket's own -14° tilt */
+  @keyframes rocket-flight {
+    from {
+      transform: translate(-8px, 8px);
+    }
+    to {
+      transform: rotate(2deg) translate(10px, -9px);
+    }
+  }
+  @keyframes flame-pulse {
+    from {
+      opacity: 0.7;
+      transform: scaleX(0.88);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1.05);
+    }
+  }
 }
 
 @layer base {
@@ -28,8 +52,16 @@
 /* Deep-space page background with a tiled starfield on top */
 @utility space-background {
   background:
-    radial-gradient(circle at 76% 28%, rgba(50, 40, 160, 0.07), transparent 34%),
-    radial-gradient(circle at 20% 78%, rgba(90, 30, 145, 0.045), transparent 38%),
+    radial-gradient(
+      circle at 76% 28%,
+      rgba(50, 40, 160, 0.07),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 20% 78%,
+      rgba(90, 30, 145, 0.045),
+      transparent 38%
+    ),
     linear-gradient(145deg, #000003 0%, #020108 52%, #000004 100%);
 
   &::before {
@@ -38,17 +70,22 @@
     inset: 0;
     pointer-events: none;
     opacity: 0.7;
-    background-image:
-      radial-gradient(circle at 12% 22%, #fff 0 1px, transparent 1.5px),
-      radial-gradient(circle at 82% 15%, #8494ff 0 1px, transparent 1.5px),
-      radial-gradient(circle at 68% 72%, #fff 0 1px, transparent 1.5px),
-      radial-gradient(circle at 22% 82%, #b077ff 0 1px, transparent 1.5px);
-    background-size:
-      310px 280px,
-      370px 340px,
-      440px 360px,
-      390px 420px;
+    @apply starfield;
   }
+}
+
+/* Tiled pattern of small stars; shift it with background-position for parallax */
+@utility starfield {
+  background-image:
+    radial-gradient(circle at 12% 22%, #fff 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 15%, #8494ff 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 72%, #fff 0 1px, transparent 1.5px),
+    radial-gradient(circle at 22% 82%, #b077ff 0 1px, transparent 1.5px);
+  background-size:
+    310px 280px,
+    370px 340px,
+    440px 360px,
+    390px 420px;
 }
 
 /* Shading and diagonal cloud bands of a planet drawn with CSS */

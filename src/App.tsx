@@ -6,6 +6,11 @@ import { Home } from "./pages/Home";
 const Explore = lazy(() =>
   import("./pages/Explore").then((module) => ({ default: module.Explore })),
 );
+const MissionRoute = lazy(() =>
+  import("./pages/Mission").then((module) => ({
+    default: module.MissionRoute,
+  })),
+);
 
 function App() {
   return (
@@ -16,6 +21,14 @@ function App() {
         element={
           <Suspense fallback={null}>
             <Explore />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/exoplanet/:id"
+        element={
+          <Suspense fallback={null}>
+            <MissionRoute />
           </Suspense>
         }
       />
